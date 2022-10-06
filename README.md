@@ -2,3 +2,4 @@
 Nomadcoders에서 공부하며 정리한 내용들의 기록을 합니다.
 1. GraphQL
 2. Apollo
+3. NextJS
