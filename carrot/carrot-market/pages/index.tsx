@@ -5,21 +5,30 @@ const Home: NextPage = () => {
     <div className="grid min-h-screen gap-10 bg-slate-400 py-20 px-20">
       <div className="rounded-2xl bg-white p-6 shadow-xl">
         <span className="text-3xl font-semibold">Select Item</span>
-        <div className="mb-2 flex justify-between">
-          <span className="text-gray-500">Grey Chair</span>
-          <span className="font-semibold">$19</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-gray-500">Grey Chair</span>
-          <span className="font-semibold">$19</span>
-        </div>
+        <ul>
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="my-2 flex justify-between">
+              <span className="text-gray-500">Grey Chair</span>
+              <span className="font-semibold">$19</span>
+            </div>
+          ))}
+        </ul>
+        {["a", "b", "c", ""].map((c, i) => (
+          <li key={i} className="bg-red-500 py-2 empty:bg-blue-500 empty:hidden">
+            {c}
+          </li>
+        ))}
         <div className="mt-2 flex justify-between border-t-2 border-dashed pt-2">
           <span>Total</span>
           <span className="font-semibold">$10</span>
         </div>
-        <div className="mx-auto mt-5 w-2/4 rounded-lg bg-blue-500 p-3 text-center text-white">
+        <button
+          className="mx-auto mt-5 block w-2/4 rounded-lg bg-blue-500 p-3 
+          text-center text-white hover:bg-teal-500 hover:text-black
+        focus:text-red-500 active:bg-yellow-500"
+        >
           Checkout
-        </div>
+        </button>
       </div>
       <div className="overflow-hidden rounded-2xl bg-white shadow-xl">
         <div className="bg-blue-500 p-6 pb-14">
@@ -57,9 +66,9 @@ const Home: NextPage = () => {
           <span className="text-xs text-gray-500">Chair</span>
           <div className="mt-3 mb-5 flex items-center justify-between">
             <div className="space-x-2">
-              <button className="h-5 w-5 rounded-full bg-yellow-500" />
-              <button className="h-5 w-5 rounded-full bg-indigo-500" />
-              <button className="h-5 w-5 rounded-full bg-teal-500" />
+              <button className="h-5 w-5 rounded-full bg-yellow-500 ring-yellow-300 ring-offset-2 transition focus:ring-2" />
+              <button className="h-5 w-5 rounded-full bg-indigo-500 ring-indigo-300 ring-offset-2 transition focus:ring-2" />
+              <button className="h-5 w-5 rounded-full bg-teal-500 ring-teal-300 ring-offset-2 transition focus:ring-2" />
             </div>
             <div className="flex items-center space-x-5">
               <button className="flex aspect-square w-8 items-center justify-center rounded-lg bg-blue-200 p-1.5 text-xl text-gray-500">
