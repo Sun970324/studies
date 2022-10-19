@@ -56,12 +56,12 @@ const Home: NextPage = () => {
           <span className="mb-1.5 text-xl font-medium">Swoon Lounge</span>
           <span className="text-xs text-gray-500">Chair</span>
           <div className="mt-3 mb-5 flex items-center justify-between">
-            <div>
-              <input type="radio" />
-              <input type="radio" />
-              <input type="radio" />
+            <div className="space-x-2">
+              <button className="h-5 w-5 rounded-full bg-yellow-500" />
+              <button className="h-5 w-5 rounded-full bg-indigo-500" />
+              <button className="h-5 w-5 rounded-full bg-teal-500" />
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-5">
               <button className="flex aspect-square w-8 items-center justify-center rounded-lg bg-blue-200 p-1.5 text-xl text-gray-500">
                 -
               </button>
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
         </div>
         <div className="flex items-center justify-between ">
           <span className="text-2xl font-medium">$450</span>
-          <button className="rounded-lg bg-blue-500 py-2 px-8 text-xs text-center text-white">
+          <button className="rounded-lg bg-blue-500 py-2 px-8 text-center text-xs text-white">
             Add to cart
           </button>
         </div>
