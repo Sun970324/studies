@@ -4,3 +4,4 @@ Nomadcoders에서 공부하며 정리한 내용들의 기록을 합니다.
 2. Apollo
 3. NextJS
 4. Carrot-market 클론코딩(NextJS, TailwindCSS, Prisma, Typescript)
+5. Nexus
