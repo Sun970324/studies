@@ -16,7 +16,7 @@ model User {
   lastname  String
   email     String @unique
   password  String
-  votes      Vote[]
+  votes     Vote[]
 }
 
 model Board {
@@ -31,7 +31,7 @@ model Item {
   content String
   boardId String
   board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
-  votes    Vote[]
+  votes   Vote[]
 }
 
 model Vote {
