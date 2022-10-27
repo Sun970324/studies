@@ -6,14 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pstudio": "npx prisma studio",
+    "connectdb": "pscale connect carrot-market"
   },
   "dependencies": {
     "@prisma/client": "^4.5.0",
+    "iron-session": "^6.3.1",
     "next": "^12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.38.0"
+    "react-hook-form": "^7.38.0",
+    "swr": "^1.3.0",
+    "twilio": "^3.83.0"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
