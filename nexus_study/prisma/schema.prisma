@@ -11,34 +11,85 @@ generator client {
 }
 
 model User {
-  id        String @id @default(cuid())
-  firstname String
-  lastname  String
-  email     String @unique
-  password  String
-  votes     Vote[]
+  id            Int         @id @default(autoincrement())
+  userType      UserType    @map("user_type")
+  recruiterInfo Recruiter? 
+  jobSeeker     JobSeeker?
+  
+  @@map("user")
 }
 
-model Board {
-  id          String @id @default(cuid())
-  name        String
-  description String
-  items       Item[]
+model JobSeeker {
+  userId Int      @id @map("user_id")
+  name   String
+  phone  String?
+  email  String?
+  user   User     @relation(fields: [userId], references: [id])
+  resumes Resume[]
+
+  @@map("job_seeker")
 }
 
-model Item {
-  id      String @id @default(cuid())
-  content String
-  boardId String
-  board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
-  votes   Vote[]
+model Recruiter {
+  userId Int     @id @map("user_id")
+  name   String
+  phone  String?
+  email  String?
+  user   User    @relation(fields: [userId], references: [id])
+  posts  Post[]
+
+  @@map("recruiter")
 }
 
-model Vote {
-  userId String
-  itemId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  item   Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
-
-  @@id([userId, itemId])
+model Resume {
+  id        Int       @id @default(autoincrement())
+  jobSeekerUserId Int @map("job_seeker_id")
+  jobSeeker JobSeeker @relation(fields: [jobSeekerUserId], references: [userId])
+  @@map("resume")
 }
+
+model Post {
+  id              Int       @id @default(autoincrement())
+  recruiterUserId Int @map("recruiter_id")
+  title           String
+  recruiter       Recruiter @relation(fields: [recruiterUserId], references: [userId])
+  @@map("post")
+}
+
+enum UserType {
+  USER
+  RECRUITER
+}
+
+// model User {
+//   id        String @id @default(cuid())
+//   firstname String
+//   lastname  String
+//   email     String @unique
+//   password  String
+//   votes     Vote[]
+// }
+
+// model Board {
+//   id          String @id @default(cuid())
+//   name        String
+//   description String
+//   items       Item[]
+// }
+
+// model Item {
+//   id      String @id @default(cuid())
+//   content String
+//   boardId String
+//   board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+//   votes   Vote[]
+// }
+
+// model Vote {
+//   userId String
+//   itemId String
+//   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   item   Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+//   @@id([userId, itemId])
+// }
