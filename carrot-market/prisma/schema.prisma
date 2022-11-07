@@ -13,19 +13,19 @@ datasource db {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  phone     String?     @unique
-  email     String?     @unique
-  name      String
-  avatar    String?
-  tokens    Token[]
-  products  Product[]
-  favs      Fav[]
-  posts     Post[]
-  answers   Answer[]
+  id         Int         @id @default(autoincrement())
+  phone      String?     @unique
+  email      String?     @unique
+  name       String
+  avatar     String?
+  tokens     Token[]
+  products   Product[]
+  favs       Fav[]
+  posts      Post[]
+  answers    Answer[]
   wonderings Wondering[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 }
 
 model Token {
@@ -61,14 +61,16 @@ model Fav {
 }
 
 model Post {
-  id        Int         @id @default(autoincrement())
-  user      User        @relation(fields: [userId], references: [id])
-  userId    Int
-  question  String      @db.MediumText
-  answer   Answer[]
+  id         Int         @id @default(autoincrement())
+  user       User        @relation(fields: [userId], references: [id])
+  userId     Int
+  question   String      @db.MediumText
+  answer     Answer[]
   wonderings Wondering[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  latitude   Float?
+  longitude  Float?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 }
 
 model Answer {
@@ -91,4 +93,3 @@ model Wondering {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
