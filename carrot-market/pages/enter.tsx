@@ -64,7 +64,7 @@ const Enter: NextPage = () => {
               name="token"
               label="Confirmation Token"
               type="number"
-              reqierd
+              required
             />
             <Button text={tokenLoading ? "Loading" : "Confirm Token"} />
           </form>
@@ -111,7 +111,7 @@ const Enter: NextPage = () => {
                   name="email"
                   label="Email address"
                   type="email"
-                  reqierd
+                  required
                 />
               ) : null}
               {method === "phone" ? (
@@ -123,7 +123,7 @@ const Enter: NextPage = () => {
                   label="Phone number"
                   type="number"
                   kind="phone"
-                  reqierd
+                  required
                 />
               ) : null}
               {method === "email" ? (

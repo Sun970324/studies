@@ -9,21 +9,20 @@ export const User = objectType({
   },
 });
 
-
 // JobSeeker
 export const JobSeeker = objectType({
-  name:"JobSeeker",
+  name: "JobSeeker",
   definition(t) {
-    t.id("id")
-    t.string("name")
-    t.string("email")
+    t.id("id");
+    t.string("name");
+    t.string("email");
   },
-})
+});
 
 export const UserType = enumType({
-  name:"UserType",
-  members: ['JOBSEEKER', 'RECRUITER']
-})
+  name: "UserType",
+  members: ["JOBSEEKER", "RECRUITER"],
+});
 // //User
 // export const User = objectType({
 //   name: "User",
