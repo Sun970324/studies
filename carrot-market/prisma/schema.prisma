@@ -65,7 +65,7 @@ model Post {
   user      User        @relation(fields: [userId], references: [id])
   userId    Int
   question  String      @db.MediumText
-  answers   Answer[]
+  answer   Answer[]
   wonderings Wondering[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
@@ -91,3 +91,4 @@ model Wondering {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
