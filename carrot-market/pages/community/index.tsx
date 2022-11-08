@@ -9,9 +9,9 @@ import useCoords from "@libs/client/useCoords";
 interface PostWithUser extends Post {
   user: User;
   _count: {
-    wonderings: number,
-    answer: number
-  }
+    wondering: number;
+    answers: number;
+  };
 }
 
 interface PostsResponse {
@@ -20,9 +20,12 @@ interface PostsResponse {
 }
 
 const Community: NextPage = () => {
-  const {latitude,longitude} = useCoords()
-  const { data } = useSWR<PostsResponse>(latitude && longitude ?`/api/posts?latitude=${latitude}&longitude=${longitude}` : null);
-  console.log(data);
+  const { latitude, longitude } = useCoords();
+  const { data } = useSWR<PostsResponse>(
+    latitude && longitude
+      ? `/api/posts?latitude=${latitude}&longitude=${longitude}`
+      : null
+  );
   return (
     <Layout hasTabBar title="동네생활">
       <div className="space-y-4 divide-y-[2px]">
@@ -56,7 +59,7 @@ const Community: NextPage = () => {
                       d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                     ></path>
                   </svg>
-                  <span>궁금해요 {post._count.wonderings}</span>
+                  <span>궁금해요 {post._count.wondering}</span>
                 </span>
                 <span className="flex items-center space-x-2 text-sm">
                   <svg
@@ -73,7 +76,7 @@ const Community: NextPage = () => {
                       d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                     ></path>
                   </svg>
-                  <span>답변 {post._count.answer}</span>
+                  <span>답변 {post._count.answers}</span>
                 </span>
               </div>
             </a>
