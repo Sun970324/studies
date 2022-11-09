@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
   -ms-overflow-style: none;
-  }
-  ::-webkit-scrollbar {
+}
+::-webkit-scrollbar {
   display: none;
-  }
+}
