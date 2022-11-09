@@ -4,8 +4,10 @@ import Item from "@components/item";
 import Layout from "@components/layout";
 import useUser from "@libs/client/useUser";
 import Head from "next/head";
-import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import { Fav, Product } from "@prisma/client";
+import { useInfiniteScroll } from "@libs/client/useInfiniteScroll";
+import { useEffect } from "react";
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -14,20 +16,33 @@ export interface ProductWithCount extends Product {
 }
 
 interface ProductsResponse {
-  ok:boolean;
-  products: ProductWithCount[]
+  ok: boolean;
+  products: ProductWithCount[];
+  pages: number;
 }
 
+const getKey = (pageIndex: number, previousPageData: ProductsResponse) => {
+  if (pageIndex === 0) return `/api/products?page=1`;
+  if (pageIndex + 1 > previousPageData.pages) return null;
+  return `/api/products?page=${pageIndex + 1}`;
+};
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Home: NextPage = () => {
-  const { user, isLoading } = useUser();
-  const {data} = useSWR<ProductsResponse>("/api/products")
+  const { data, setSize } = useSWRInfinite<ProductsResponse>(getKey, fetcher);
+  const products = data ? data.map((item) => item.products).flat() : [];
+  const page = useInfiniteScroll();
+
+  useEffect(() => {
+    setSize(page);
+  }, [setSize, page]);
   return (
     <Layout title="홈" hasTabBar>
       <Head>
         <title>HOME</title>
       </Head>
       <div className="flex flex-col space-y-5 divide-y">
-        {data?.products?.map((product) => (
+        {products.map((product) => (
           <Item
             id={product.id}
             key={product.id}

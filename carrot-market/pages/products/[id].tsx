@@ -8,6 +8,7 @@ import { Product, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import useUser from "@libs/client/useUser";
+import { useEffect } from "react";
 
 interface ProductWithUser extends Product {
   user: User;
@@ -21,19 +22,25 @@ interface ItemDetailResponse {
 }
 
 const ItemDetail: NextPage = () => {
-  const {user, isLoading} = useUser()
+  // const {user, isLoading} = useUser()
   const router = useRouter();
-  const {mutate} = useSWRConfig()
+  // const {mutate} = useSWRConfig()
   const { data, mutate:boundMutate } = useSWR<ItemDetailResponse>(
     router.query.id ? `/api/products/${router.query.id}` : null
   );
   const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
   const onFavClick = () => {
-    toggleFav({});
     if(!data) return
+    toggleFav({});
     boundMutate(prev => prev && ({...prev, isLiked: !prev.isLiked}), false)
     // mutate("/api/users/me", (prev:any) => ({ok:!prev.ok}), false)
   };
+
+  useEffect(() => {
+    if (data && !data?.ok) {
+      router.push("/");
+    }
+  }, [router, data]);
   return (
     <Layout canGoBack>
       <div className="px-4  py-4">

@@ -3,23 +3,40 @@ import Link from "next/link";
 import FloatingButton from "@components/floating-button";
 import Layout from "@components/layout";
 import { Stream } from "@prisma/client";
-import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
+import { useInfiniteScroll } from "@libs/client/useInfiniteScroll";
+import { useEffect } from "react";
 
-interface StreamsResponse {
-  ok:boolean;
-  streams: Stream[]
+interface StreamResponse {
+  ok: boolean;
+  streams: Stream[];
+  pages: number;
 }
 
+const getKey = (pageIndex: number, previousPageData: StreamResponse) => {
+  if (pageIndex === 0) return `/api/streams?page=1`;
+  if (pageIndex + 1 > previousPageData.pages) return null;
+  return `/api/streams?page=${pageIndex + 1}`;
+};
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Streams: NextPage = () => {
-  const {data} = useSWR<StreamsResponse>(`/api/streams`)
+  const { data, setSize } = useSWRInfinite<StreamResponse>(getKey, fetcher);
+  const streams = data ? data.map((item) => item.streams).flat() : [];
+  const page = useInfiniteScroll();
+
+  useEffect(() => {
+    setSize(page);
+  }, [setSize, page]);
+  
   return (
     <Layout hasTabBar title="라이브">
-      <div className=" divide-y-[1px] space-y-4">
-        {data?.streams.map((stream) => (
+      <div className=" space-y-4 divide-y-[1px]">
+        {streams.map((stream) => (
           <Link key={stream.id} href={`/streams/${stream.id}`}>
-            <a className="pt-4 block  px-4">
-              <div className="w-full rounded-md shadow-sm bg-slate-300 aspect-video" />
-              <h1 className="text-2xl mt-2 font-bold text-gray-900">
+            <a className="block px-4  pt-4">
+              <div className="aspect-video w-full rounded-md bg-slate-300 shadow-sm" />
+              <h1 className="mt-2 text-2xl font-bold text-gray-900">
                 {stream.name}
               </h1>
             </a>
@@ -27,7 +44,7 @@ const Streams: NextPage = () => {
         ))}
         <FloatingButton href="/streams/create">
           <svg
-            className="w-6 h-6"
+            className="h-6 w-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

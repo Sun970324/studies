@@ -10,6 +10,7 @@ async function handler(
   const {
     session: { user },
     body: { name, price, description },
+    query: {page}
   } = req;
   if (req.method === "POST") {
     const stream = await client.stream.create({
@@ -30,10 +31,12 @@ async function handler(
     });
   }
   if(req.method === "GET") {
+    const countStream = await client.stream.count();
     const streams = await client.stream.findMany({
-      take:5
+      take:10,
+      skip: (Number(page)-1) * 10
     })
-    res.json({ok:true, streams})
+    res.json({ok:true, streams, pages: Math.ceil(countStream / 10)})
   }
 }
 
