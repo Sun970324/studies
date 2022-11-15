@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { type } from "os";
 
 export interface ResponseType {
   ok: boolean;
